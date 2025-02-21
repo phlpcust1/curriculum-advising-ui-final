@@ -80,54 +80,64 @@ export function Assignment() {
   };
 
   const handleAssignCoach = async () => {
-    try {
-      const assignments = selectedStudents.map((studentId) => ({
-        studentId: parseInt(studentId),
-        coachId: parseInt(selectedCoach),
-      }));
+    const confirmAssign = window.confirm(
+      "Are you sure you want to assign these students to this coach?"
+    );
+    if (confirmAssign) {
+      try {
+        const assignments = selectedStudents.map((studentId) => ({
+          studentId: parseInt(studentId),
+          coachId: parseInt(selectedCoach),
+        }));
 
-      await axios.post(
-        `${PORT}/assignments/bulk`,
-        { assignments },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
-        }
-      );
+        await axios.post(
+          `${PORT}/assignments/bulk`,
+          { assignments },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+            },
+          }
+        );
 
-      setIsAssignModalOpen(false);
-      setSelectedStudents([]);
-      setSelectedCoach(null);
-      fetchStudents();
-    } catch (error) {
-      console.error("Error assigning coach:", error);
+        setIsAssignModalOpen(false);
+        setSelectedStudents([]);
+        setSelectedCoach(null);
+        fetchStudents();
+      } catch (error) {
+        console.error("Error assigning coach:", error);
+      }
     }
   };
 
   const handleReassignCoach = async () => {
-    try {
-      const assignments = selectedStudents.map((studentId) => ({
-        studentId: parseInt(studentId),
-        coachId: parseInt(selectedCoach),
-      }));
+    const confirmReassign = window.confirm(
+      "Are you sure you want to re-assign these students to this coach?"
+    );
+    if (confirmReassign) {
+      try {
+        const assignments = selectedStudents.map((studentId) => ({
+          studentId: parseInt(studentId),
+          coachId: parseInt(selectedCoach),
+        }));
 
-      await axios.patch(
-        `${PORT}/assignments/bulk`,
-        { assignments },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
-        }
-      );
+        await axios.patch(
+          `${PORT}/assignments/bulk`,
+          { assignments },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+            },
+          }
+        );
 
-      setIsReassignModalOpen(false);
-      setSelectedStudents([]);
-      setSelectedCoach(null);
-      fetchStudents();
-    } catch (error) {
-      console.error("Error re-assigning coach:", error);
+        setIsReassignModalOpen(false);
+        setSelectedStudents([]);
+        setSelectedCoach(null);
+        fetchStudents();
+      } catch (error) {
+        console.error("Error re-assigning coach:", error);
+      }
     }
   };
 

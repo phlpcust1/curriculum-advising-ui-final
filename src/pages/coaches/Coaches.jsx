@@ -217,7 +217,7 @@ export function Coaches() {
                     className="btn btn-xs bg-gray-900 text-white hover:bg-gray-800"
                     onClick={handleDownloadCsv}
                   >
-                    Download as csv
+                    📄Download Template
                   </button>
                 </div>
               </div>

@@ -113,28 +113,28 @@ export default function SubjectSummary() {
             <div className="card-body">
               <div>
                 <div className="flex items-center justify-between">
-                  <div className="flex gap-4 mb-4">
-                    <select
-                      className="select select-bordered"
-                      value={yearFilter}
-                      onChange={(e) => setYearFilter(e.target.value)}
-                    >
-                      <option value="All">All Years</option>
-                      <option value="FIRST">First Year</option>
-                      <option value="SECOND">Second Year</option>
-                      <option value="THIRD">Third Year</option>
-                      <option value="FOURTH">Fourth Year</option>
-                    </select>
-                    <select
-                      className="select select-bordered"
-                      value={semFilter}
-                      onChange={(e) => setSemFilter(e.target.value)}
-                    >
-                      <option value="All">All Semesters</option>
-                      <option value="1">1st Semester</option>
-                      <option value="2">2nd Semester</option>
-                    </select>
-                  </div>
+                    <div className="flex gap-4 mb-4">
+                      <select
+                        className="select select-bordered"
+                        value={yearFilter}
+                        onChange={(e) => setYearFilter(e.target.value)}
+                      >
+                        <option value="All">All Years</option>
+                        <option value="FIRST">First Year</option>
+                        <option value="SECOND">Second Year</option>
+                        <option value="THIRD">Third Year</option>
+                        <option value="FOURTH">Fourth Year</option>
+                      </select>
+                      <select
+                        className="select select-bordered"
+                        value={semFilter}
+                        onChange={(e) => setSemFilter(e.target.value)}
+                      >
+                        <option value="All">All Semesters</option>
+                        <option value="1">1st Semester</option>
+                        <option value="2">2nd Semester</option>
+                      </select>
+                    </div>
                 </div>
 
                 <div className="overflow-x-auto">

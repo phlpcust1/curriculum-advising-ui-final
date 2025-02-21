@@ -275,7 +275,7 @@ export function Students() {
                     className="btn btn-xs bg-gray-900 text-white hover:bg-gray-800"
                     onClick={handleDownloadCsv}
                   >
-                    Download as csv
+                   📄Download Template
                   </button>
                 </div>
               </div>
@@ -337,278 +337,295 @@ export function Students() {
         </div>
       </div>
 
-      {/* Add Student Modal */}
-      {isModalOpen && (
-        <div className="modal modal-open">
-          <div className="modal-box">
-            <h3 className="font-bold text-lg">Add Students</h3>
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              className="mt-4 grid grid-cols-2 gap-4"
-            >
-              <div>
-                <label className="block text-sm">First Name</label>
-                <input
-                  type="text"
-                  className="input input-bordered w-full"
-                  {...register("firstName", {
-                    required: "First name is required",
-                  })}
-                />
-                {errors.firstName && (
-                  <span className="text-red-500 text-sm">
-                    {errors.firstName.message}
-                  </span>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm">Last Name</label>
-                <input
-                  type="text"
-                  className="input input-bordered w-full"
-                  {...register("lastName", {
-                    required: "Last name is required",
-                  })}
-                />
-                {errors.lastName && (
-                  <span className="text-red-500 text-sm">
-                    {errors.lastName.message}
-                  </span>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm">Student ID</label>
-                <input
-                  type="text"
-                  className="input input-bordered w-full"
-                  {...register("studentId", {
-                    required: "Student ID is required",
-                  })}
-                />
-                {errors.studentId && (
-                  <span className="text-red-500 text-sm">
-                    {errors.studentId.message}
-                  </span>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm">Username</label>
-                <input
-                  type="text"
-                  className="input input-bordered w-full"
-                  {...register("username", {
-                    required: "Username is required",
-                  })}
-                />
-                {errors.username && (
-                  <span className="text-red-500 text-sm">
-                    {errors.username.message}
-                  </span>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm">Course</label>
-                <select
-                  className="select select-bordered w-full"
-                  {...register("programId", { required: "Course is required" })}
-                >
-                  <option value="">Select Course</option>
-                  {programs.map((prog) => (
-                    <option key={prog.id} value={prog.id}>
-                      {prog.code}
-                    </option>
-                  ))}
-                </select>
-                {errors.programId && (
-                  <span className="text-red-500 text-sm">
-                    {errors.programId.message}
-                  </span>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm">Email Address</label>
-                <input
-                  type="email"
-                  className="input input-bordered w-full"
-                  {...register("email", { required: "Email is required" })}
-                />
-                {errors.email && (
-                  <span className="text-red-500 text-sm">
-                    {errors.email.message}
-                  </span>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm">Address</label>
-                <input
-                  type="text"
-                  className="input input-bordered w-full"
-                  {...register("address", { required: "Address is required" })}
-                />
-                {errors.address && (
-                  <span className="text-red-500 text-sm">
-                    {errors.address.message}
-                  </span>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm">Password</label>
-                <input
-                  type="password"
-                  className="input input-bordered w-full"
-                  value="password"
-                  disabled
-                  {...register("password")}
-                />
-              </div>
-              <div className="modal-action col-span-2 flex justify-between">
-                <button type="submit" className="btn btn-primary">
-                  Save
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-ghost"
-                  onClick={() => setIsModalOpen(false)}
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
+      /* Add Student Modal */
+{isModalOpen && (
+  <div className="modal modal-open">
+    <div className="modal-box">
+      <h3 className="font-bold text-lg">Add Students</h3>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="mt-4 grid grid-cols-2 gap-4"
+      >
+        <div>
+          <label className="block text-sm">First Name</label>
+          <input
+            type="text"
+            className="input input-bordered w-full"
+            {...register("firstName", {
+              required: "First name is required",
+            })}
+          />
+          {errors.firstName && (
+            <span className="text-red-500 text-sm">
+              {errors.firstName.message}
+            </span>
+          )}
         </div>
-      )}
-
-      {/* View Student Modal */}
-      {isViewModalOpen && (
-        <div className="modal modal-open">
-          <div className="modal-box">
-            <h3 className="font-bold text-lg">Student Information</h3>
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              className="mt-4 grid grid-cols-2 gap-4"
-            >
-              <div>
-                <label className="block text-sm">First Name</label>
-                <input
-                  type="text"
-                  className="input input-bordered w-full"
-                  {...register("firstName", {
-                    required: "First name is required",
-                  })}
-                />
-                {errors.firstName && (
-                  <span className="text-red-500 text-sm">
-                    {errors.firstName.message}
-                  </span>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm">Last Name</label>
-                <input
-                  type="text"
-                  className="input input-bordered w-full"
-                  {...register("lastName", {
-                    required: "Last name is required",
-                  })}
-                />
-                {errors.lastName && (
-                  <span className="text-red-500 text-sm">
-                    {errors.lastName.message}
-                  </span>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm">Student ID</label>
-                <input
-                  type="text"
-                  className="input input-bordered w-full"
-                  {...register("studentId", {
-                    required: "Student ID is required",
-                  })}
-                />
-                {errors.studentId && (
-                  <span className="text-red-500 text-sm">
-                    {errors.studentId.message}
-                  </span>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm">Username</label>
-                <input
-                  type="text"
-                  className="input input-bordered w-full"
-                  {...register("username", {
-                    required: "Username is required",
-                  })}
-                />
-                {errors.username && (
-                  <span className="text-red-500 text-sm">
-                    {errors.username.message}
-                  </span>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm">Course</label>
-                <select
-                  className="select select-bordered w-full"
-                  {...register("programId", { required: "Course is required" })}
-                >
-                  <option value="">Select Course</option>
-                  {programs.map((prog) => (
-                    <option key={prog.id} value={prog.id}>
-                      {prog.code}
-                    </option>
-                  ))}
-                </select>
-                {errors.programId && (
-                  <span className="text-red-500 text-sm">
-                    {errors.programId.message}
-                  </span>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm">Email Address</label>
-                <input
-                  type="email"
-                  className="input input-bordered w-full"
-                  {...register("email", { required: "Email is required" })}
-                />
-                {errors.email && (
-                  <span className="text-red-500 text-sm">
-                    {errors.email.message}
-                  </span>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm">Address</label>
-                <input
-                  type="text"
-                  className="input input-bordered w-full"
-                  {...register("address", { required: "Address is required" })}
-                />
-                {errors.address && (
-                  <span className="text-red-500 text-sm">
-                    {errors.address.message}
-                  </span>
-                )}
-              </div>
-
-              <div className="modal-action col-span-2 flex justify-between">
-                <button type="submit" className="btn btn-primary">
-                  Save
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-ghost"
-                  onClick={() => setIsViewModalOpen(false)}
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
+        <div>
+          <label className="block text-sm">Last Name</label>
+          <input
+            type="text"
+            className="input input-bordered w-full"
+            {...register("lastName", {
+              required: "Last name is required",
+            })}
+          />
+          {errors.lastName && (
+            <span className="text-red-500 text-sm">
+              {errors.lastName.message}
+            </span>
+          )}
         </div>
-      )}
+        <div>
+          <label className="block text-sm">Student ID</label>
+          <input
+            type="text"
+            className="input input-bordered w-full"
+            {...register("studentId", {
+              required: "Student ID is required",
+            })}
+          />
+          {errors.studentId && (
+            <span className="text-red-500 text-sm">
+              {errors.studentId.message}
+            </span>
+          )}
+        </div>
+        <div>
+          <label className="block text-sm">Username</label>
+          <input
+            type="text"
+            className="input input-bordered w-full"
+            {...register("username", {
+              required: "Username is required",
+            })}
+          />
+          {errors.username && (
+            <span className="text-red-500 text-sm">
+              {errors.username.message}
+            </span>
+          )}
+        </div>
+        <div>
+          <label className="block text-sm">Course</label>
+          <select
+            className="select select-bordered w-full"
+            {...register("programId", { required: "Course is required" })}
+          >
+            <option value="">Select Course</option>
+            <option value="ACT">ACT</option>
+            <option value="BSIT">BSIT</option>
+            <option value="BSCS">BSCS</option>
+            <option value="BLIS">BLIS</option>
+          </select>
+          {errors.programId && (
+            <span className="text-red-500 text-sm">
+              {errors.programId.message}
+            </span>
+          )}
+        </div>
+        <div>
+          <label className="block text-sm">Email Address</label>
+          <input
+            type="email"
+            className="input input-bordered w-full"
+            {...register("email", { required: "Email is required" })}
+          />
+          {errors.email && (
+            <span className="text-red-500 text-sm">
+              {errors.email.message}
+            </span>
+          )}
+        </div>
+        <div>
+          <label className="block text-sm">Address</label>
+          <input
+            type="text"
+            className="input input-bordered w-full"
+            {...register("address", { required: "Address is required" })}
+          />
+          {errors.address && (
+            <span className="text-red-500 text-sm">
+              {errors.address.message}
+            </span>
+          )}
+        </div>
+        <div>
+          <label className="block text-sm">Password</label>
+          <input
+            type="password"
+            className="input input-bordered w-full"
+            value="password"
+            disabled
+            {...register("password")}
+          />
+        </div>
+        <div className="modal-action col-span-2 flex justify-between">
+          <button type="submit" className="btn btn-primary">
+            Save
+          </button>
+          <button
+            type="button"
+            className="btn btn-ghost"
+            onClick={() => setIsModalOpen(false)}
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+)}
+
+     {/* View Student Modal */}
+{isViewModalOpen && (
+  <div className="modal modal-open">
+    <div className="modal-box">
+      <h3 className="font-bold text-lg">Student Information</h3>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="mt-4 grid grid-cols-2 gap-4"
+      >
+        <div>
+          <label className="block text-sm">First Name</label>
+          <input
+            type="text"
+            className="input input-bordered w-full"
+            {...register("firstName", {
+              required: "First name is required",
+            })}
+          />
+          {errors.firstName && (
+            <span className="text-red-500 text-sm">
+              {errors.firstName.message}
+            </span>
+          )}
+        </div>
+        <div>
+          <label className="block text-sm">Last Name</label>
+          <input
+            type="text"
+            className="input input-bordered w-full"
+            {...register("lastName", {
+              required: "Last name is required",
+            })}
+          />
+          {errors.lastName && (
+            <span className="text-red-500 text-sm">
+              {errors.lastName.message}
+            </span>
+          )}
+        </div>
+        <div>
+          <label className="block text-sm">Student ID</label>
+          <input
+            type="text"
+            className="input input-bordered w-full"
+            {...register("studentId", {
+              required: "Student ID is required",
+            })}
+          />
+          {errors.studentId && (
+            <span className="text-red-500 text-sm">
+              {errors.studentId.message}
+            </span>
+          )}
+        </div>
+        <div>
+          <label className="block text-sm">Username</label>
+          <input
+            type="text"
+            className="input input-bordered w-full"
+            {...register("username", {
+              required: "Username is required",
+            })}
+          />
+          {errors.username && (
+            <span className="text-red-500 text-sm">
+              {errors.username.message}
+            </span>
+          )}
+        </div>
+        <div>
+          <label className="block text-sm">Course</label>
+          <select
+            className="select select-bordered w-full"
+            {...register("programId", { required: "Course is required" })}
+          >
+            <option value="">Select Course</option>
+            {programs.map((prog) => (
+              <option key={prog.id} value={prog.id}>
+                {prog.code}
+              </option>
+            ))}
+          </select>
+          {errors.programId && (
+            <span className="text-red-500 text-sm">
+              {errors.programId.message}
+            </span>
+          )}
+        </div>
+        <div>
+          <label className="block text-sm">Curriculum ID</label>
+          <input
+            type="text"
+            className="input input-bordered w-full"
+            {...register("curriculumId", {
+              required: "Curriculum ID is required",
+            })}
+          />
+          {errors.curriculumId && (
+            <span className="text-red-500 text-sm">
+              {errors.curriculumId.message}
+            </span>
+          )}
+        </div>
+        <div>
+          <label className="block text-sm">Email Address</label>
+          <input
+            type="email"
+            className="input input-bordered w-full"
+            {...register("email", { required: "Email is required" })}
+          />
+          {errors.email && (
+            <span className="text-red-500 text-sm">
+              {errors.email.message}
+            </span>
+          )}
+        </div>
+        <div>
+          <label className="block text-sm">Address</label>
+          <input
+            type="text"
+            className="input input-bordered w-full"
+            {...register("address", { required: "Address is required" })}
+          />
+          {errors.address && (
+            <span className="text-red-500 text-sm">
+              {errors.address.message}
+            </span>
+          )}
+        </div>
+
+        {/* Modal action buttons */}
+        <div className="modal-action col-span-2 flex justify-between">
+          <button type="submit" className="btn btn-primary">
+            Save
+          </button>
+          <button
+            type="button"
+            className="btn btn-ghost"
+            onClick={() => setIsViewModalOpen(false)}
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+)}
+
+     
       {/* Upload Students Modal */}
       {isUploadModalOpen && (
         <div className="modal modal-open">

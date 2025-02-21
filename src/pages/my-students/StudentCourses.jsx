@@ -25,6 +25,11 @@ export function StudentCourses() {
   const [semesterFilter, setSemesterFilter] = useState("1");
   const [yearFilter, setYearFilter] = useState("FIRST");
 
+
+   // New filters for Transcript of Records tab
+   const [transcriptYearFilter, setTranscriptYearFilter] = useState("All");
+   const [transcriptSemFilter, setTranscriptSemFilter] = useState("All");
+
   // **New**: Search terms
   const [evaluationSearchTerm, setEvaluationSearchTerm] = useState("");
   const [transcriptSearchTerm, setTranscriptSearchTerm] = useState("");
@@ -45,6 +50,7 @@ export function StudentCourses() {
       console.error("Error fetching student details:", error);
     }
   };
+  
 
   // Fetch all courses
   const fetchCourses = async () => {
@@ -144,18 +150,28 @@ export function StudentCourses() {
   // ---------------------------------------------------
   // Example assumption: course.programId === student.programId
   // If you use curriculumId, adapt accordingly.
-  const transcriptCourses = courses.filter((course) => {
-    if (course.programId !== student.programId) return false;
 
-    // **New**: Filter by subject or description
-    const lowerSearch = transcriptSearchTerm.toLowerCase();
-    const matchesSearch =
-      transcriptSearchTerm === "" ||
-      course.subject.toLowerCase().includes(lowerSearch) ||
-      course.description.toLowerCase().includes(lowerSearch);
-
-    return matchesSearch;
-  });
+  
+    const transcriptCourses = courses.filter((course) => {
+      if (course.programId !== student.programId) return false;
+    
+      // Convert filters to uppercase for consistency
+      const yearFilterUpper = transcriptYearFilter.toUpperCase();
+      const semFilterStr = transcriptSemFilter.toString();
+    
+      // Apply year and semester filters
+      const matchesYear = transcriptYearFilter === "All" || course.year.toUpperCase() === yearFilterUpper;
+      const matchesSemester = transcriptSemFilter === "All" || course.sem.toString() === semFilterStr;
+    
+      // Apply search filter
+      const lowerSearch = transcriptSearchTerm.toLowerCase();
+      const matchesSearch =
+        transcriptSearchTerm === "" ||
+        course.subject.toLowerCase().includes(lowerSearch) ||
+        course.description.toLowerCase().includes(lowerSearch);
+    
+      return matchesYear && matchesSemester && matchesSearch;
+    });
 
   // We'll map over these transcriptCourses and see if the student
   // has a record for each (to show remarks, no. of takes, etc.).
@@ -280,12 +296,24 @@ export function StudentCourses() {
                     >
                       Close
                     </button>
+                    
                     <button
                       className="btn btn-outline"
                       onClick={() => setIsAddCourseModalOpen(true)}
                     >
                       Add Course
                     </button>
+                    <button
+                            className="btn btn-sm btn-outline"
+                            onClick={() =>
+                              window.location.assign(
+                                `/academic-advising/${student.id}`
+                              )
+                            }
+                          >
+                           Create Academic Advising Form
+                          </button>
+                    
                   </div>
                 </>
               )}
@@ -303,6 +331,28 @@ export function StudentCourses() {
                       onChange={(e) => setTranscriptSearchTerm(e.target.value)}
                     />
                   </div>
+                  <div className="flex gap-4 mb-4">
+                  <select
+                    className="select select-bordered"
+                    value={transcriptYearFilter}
+                    onChange={(e) => setTranscriptYearFilter(e.target.value)}
+                  >
+                    <option value="All">All Year Levels</option>
+                    <option value="FIRST">First Year</option>
+                    <option value="SECOND">Second Year</option>
+                    <option value="THIRD">Third Year</option>
+                    <option value="FOURTH">Fourth Year</option>
+                  </select>
+                  <select
+                    className="select select-bordered"
+                    value={transcriptSemFilter}
+                    onChange={(e) => setTranscriptSemFilter(e.target.value)}
+                  >
+                    <option value="All">All Semesters</option>
+                    <option value="1">1st Semester</option>
+                    <option value="2">2nd Semester</option>
+                  </select>
+                </div>
 
                   <div className="overflow-x-auto">
                     <table className="table w-full">
@@ -328,7 +378,7 @@ export function StudentCourses() {
                               <td>
                                 {studentCourse
                                   ? studentCourse.remark === "HOLD"
-                                    ? "IP"
+                                    ? "Not Taken"
                                     : studentCourse.remark
                                   : "Not Taken"}
                               </td>

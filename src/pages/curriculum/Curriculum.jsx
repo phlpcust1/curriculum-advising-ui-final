@@ -14,11 +14,17 @@ export function Curriculum() {
   const [curriculumFilter, setCurriculumFilter] = useState("All");
   const [yearFilter, setYearFilter] = useState("All");
   const [semFilter, setSemFilter] = useState("All");
+  const [curriculumidFilter, setCurriculumidFilter] = useState("All");
 
   const [activeTab, setActiveTab] = useState("List of Curriculum");
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
+  };
+  const handleDelete = (id) => {
+    if (confirm("Are you sure you want to delete this curriculum?")) {
+      setCurriculums(curriculums.filter((curr) => curr.id !== id));
+    }
   };
 
   const fetchCurriculums = async () => {
@@ -182,7 +188,7 @@ export function Curriculum() {
       <div className="ml-60 bg-base-200">
         <Navbar />
         <div className="p-8">
-          <h1 className="font-bold text-xl mb-8 pl-4">Curriculum</h1>
+          <h1 className="font-bold text-xl mb-8 pl-4">Curriculum Management</h1>
 
           <div className="card bg-white w-full shadow-xl">
             <div className="card-body">
@@ -206,40 +212,47 @@ export function Curriculum() {
               </div>
 
               {activeTab === "List of Curriculum" && (
-                <div>
-                  <div className="overflow-x-auto">
-                    <table className="table w-full">
-                      <thead>
-                        <tr>
-                          <th>CURR ID#</th>
-                          <th>REV#</th>
-                          <th>EFFECTIVITY</th>
-                          <th>CMO NAME</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {curriculums.map((curriculum) => (
-                          <tr key={curriculum.id}>
-                            <td>{curriculum.code}</td>
-                            <td>{curriculum.rev}</td>
-                            <td>{curriculum.effectivity}</td>
-                            <td>{curriculum.cmoName}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
+  <div>
+    <div className="overflow-x-auto">
+      <table className="table w-full">
+        <thead>
+          <tr>
+            <th>CURR ID#</th>
+            <th>REV#</th>
+            <th>EFFECTIVITY</th>
+            <th>CMO NAME</th>
+            <th>ACTIONS</th> {/* Added Actions column */}
+          </tr>
+        </thead>
+        <tbody>
+          {curriculums.map((curriculum) => (
+            <tr key={curriculum.id}>
+              <td>{curriculum.code}</td>
+              <td>{curriculum.rev}</td>
+              <td>{curriculum.effectivity}</td>
+              <td>{curriculum.cmoName}</td>
+              <td>
+                <button
+                  className="btn btn-error btn-sm"
+                  onClick={() => handleDelete(curriculum.id)}
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
 
-                  <div className="mt-4">
-                    <button
-                      className="btn btn-outline"
-                      onClick={() => setIsModalOpen(true)}
-                    >
-                      Add Curriculum
-                    </button>
-                  </div>
-                </div>
-              )}
+    <div className="mt-4">
+      <button className="btn btn-outline" onClick={() => setIsModalOpen(true)}>
+        Add Curriculum
+      </button>
+    </div>
+  </div>
+)}
+
 
               {activeTab === "Courses" && (
                 <div>
@@ -261,8 +274,16 @@ export function Curriculum() {
                         className="btn btn-outline"
                         onClick={handleDownloadCoursesCsv}
                       >
-                        Download as csv
+                        📄Download Template
                       </button>
+                      <select
+                        className="select select-bordered"
+                        value={curriculumidFilter}
+                        onChange={(e) => setCurriculumidFilter(e.target.value)}
+                      >
+                        <option value ="All">CURR ID#</option>
+                        <option value="1">KT</option>
+                      </select>
                     </div>
                     <div className="flex gap-4 mb-4">
                       <select
