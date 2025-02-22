@@ -407,6 +407,22 @@ export function Students() {
           )}
         </div>
         <div>
+          <label className="block text-sm">Curriculum ID</label>
+          <input
+            type="text"
+            className="input input-bordered w-full"
+            {...register("CurriculumID", {
+              required: "CurriculumID is required",
+            })}
+          />
+          {errors.username && (
+            <span className="text-red-500 text-sm">
+              {errors.username.message}
+            </span>
+          )}
+        </div>
+        
+        <div>
           <label className="block text-sm">Course</label>
           <select
             className="select select-bordered w-full"
