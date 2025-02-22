@@ -21,11 +21,26 @@ export function Curriculum() {
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
-  const handleDelete = (id) => {
-    if (confirm("Are you sure you want to delete this curriculum?")) {
-      setCurriculums(curriculums.filter((curr) => curr.id !== id));
+  const handleDelete = async (id) => {
+    try {
+      const confirmed = window.confirm(
+        "Are you sure you want to delete this Curriculum?"
+      );
+      if (!confirmed) return;
+
+      await axios.delete(`${PORT}/curriculums/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      });
+      fetchCurriculums(); // Refresh the students' list after deletion
+      alert("Curriculum deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting Curriculum:", error);
+      alert("Failed to delete the Curriculum. Please try again.");
     }
   };
+
 
   const fetchCurriculums = async () => {
     try {

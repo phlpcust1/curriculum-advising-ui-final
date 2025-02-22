@@ -58,6 +58,7 @@ export function Students() {
   };
 
   const onSubmit = async (data) => {
+    console.log(data.CurriculumID)
     try {
       const payload = {
         ...data,
@@ -428,11 +429,11 @@ export function Students() {
             className="select select-bordered w-full"
             {...register("programId", { required: "Course is required" })}
           >
-            <option value="">Select Course</option>
-            <option value="ACT">ACT</option>
-            <option value="BSIT">BSIT</option>
-            <option value="BSCS">BSCS</option>
-            <option value="BLIS">BLIS</option>
+            <option value="0">Select Course</option>
+            <option value="2">ACT</option>
+            <option value="1">BSIT</option>
+            <option value="4">BSCS</option>
+            <option value="3">BLIS</option>
           </select>
           {errors.programId && (
             <span className="text-red-500 text-sm">
