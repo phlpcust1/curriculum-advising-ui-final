@@ -4,6 +4,8 @@ import axios from "axios";
 import { Navbar } from "../../components/ui/Navbar";
 import { Sidebar } from "../../components/ui/Sidebar";
 import { PORT } from "../../utils/constants";
+import { useNavigate } from 'react-router-dom';
+
 
 export default function CoachDetails() {
   const { id } = useParams(); // Get coach ID from URL
@@ -12,7 +14,7 @@ export default function CoachDetails() {
   const [yearFilter, setYearFilter] = useState("ALL");
   const [programFilter, setProgramFilter] = useState("ALL");
   const [searchQuery, setSearchQuery] = useState("");
-
+  const navigate = useNavigate();
   const fetchCoachDetails = async () => {
     try {
       const response = await axios.get(`${PORT}/coaches/${id}`, {
@@ -83,7 +85,7 @@ export default function CoachDetails() {
               </button> */}
             </div>
           </div>
-
+  
           <div className="card bg-white w-full shadow-xl">
             <div className="card-body">
               <div className="flex justify-between items-center mb-4">
@@ -94,6 +96,12 @@ export default function CoachDetails() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
+                <button
+                       className="btn btn-sm btn-outline"
+                       onClick={() => navigate('/summary?tab=summary')} // Redirects to the Coaching Summary tab
+                      >
+                        View Coaching Summary
+                    </button>
                 <div className="flex space-x-4">
                   <select
                     className="select select-bordered"

@@ -12,7 +12,7 @@ export function AcademicAdvisingForm() {
   const [coachRemarks, setCoachRemarks] = useState("");
   const [planOfAction, setPlanOfAction] = useState([]); // Subject plan (array of subjects)
   const [isLoading, setIsLoading] = useState(true);
-
+  const [selectAll, setSelectAll] = useState(false);
   // Modal states for "Add Subject to Plan"
   const [isPlanModalOpen, setIsPlanModalOpen] = useState(false);
   const [availableSubjects, setAvailableSubjects] = useState([]);
@@ -107,6 +107,17 @@ export function AcademicAdvisingForm() {
     fetchData();
   }, [id]);
 
+  //Select All checkbox
+  const handleSelectAllChange = (isChecked) => {
+    setSelectAll(isChecked);
+    if (isChecked) {
+      setSelectedSubjects(availableSubjects.filter(subject => {
+        return subject.year === planFilterYear && subject.sem.toString() === planFilterSem;
+      }));
+    } else {
+      setSelectedSubjects([]);
+    }
+  };
   // Handler for checkbox toggle in the plan modal
   const handleCheckboxChange = (subject, isChecked) => {
     if (isChecked) {
@@ -380,7 +391,14 @@ export function AcademicAdvisingForm() {
               <table className="table w-full">
                 <thead>
                   <tr>
-                    <th></th>
+                    <th>
+                      <input
+                        type="checkbox"
+                        className="checkbox"
+                        checked={selectAll}
+                        onChange={(e) => handleSelectAllChange(e.target.checked)}
+                      />
+                    </th>
                     <th>Subject</th>
                     <th>Description</th>
                     <th>Units</th>
@@ -391,12 +409,8 @@ export function AcademicAdvisingForm() {
                 <tbody>
                   {availableSubjects
                     .filter((subject) => {
-                      const yearMatch =
-                        planFilterYear === "All" ||
-                        subject.year === planFilterYear;
-                      const semMatch =
-                        planFilterSem === "All" ||
-                        subject.sem.toString() === planFilterSem;
+                      const yearMatch = planFilterYear === "All" || subject.year === planFilterYear;
+                      const semMatch = planFilterSem === "All" || subject.sem.toString() === planFilterSem;
                       return yearMatch && semMatch;
                     })
                     .map((subject) => (
@@ -405,12 +419,8 @@ export function AcademicAdvisingForm() {
                           <input
                             type="checkbox"
                             className="checkbox"
-                            checked={selectedSubjects.some(
-                              (s) => s.id === subject.id
-                            )}
-                            onChange={(e) =>
-                              handleCheckboxChange(subject, e.target.checked)
-                            }
+                            checked={selectedSubjects.some((s) => s.id === subject.id)}
+                            onChange={(e) => handleCheckboxChange(subject, e.target.checked)}
                           />
                         </td>
                         <td>{subject.subject}</td>
@@ -422,7 +432,8 @@ export function AcademicAdvisingForm() {
                     ))}
                 </tbody>
               </table>
-            </div>
+            </div>;
+
 
             {/* Modal Actions */}
             <div className="modal-action">

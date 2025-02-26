@@ -3,11 +3,13 @@ import axios from "axios";
 import { Navbar } from "../../components/ui/Navbar";
 import { Sidebar } from "../../components/ui/Sidebar";
 import { PORT } from "../../utils/constants";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 export function CoachDashboard() {
   const [students, setStudents] = useState([]);
   const [onTrackCount, setOnTrackCount] = useState(0);
   const [notOnTrackCount, setNotOnTrackCount] = useState(0);
+  const navigate = useNavigate(); // Initialize navigation
 
   const fetchDashboardData = async () => {
     try {
@@ -66,13 +68,19 @@ export function CoachDashboard() {
                 <p className="text-2xl">{students.length}</p>
               </div>
             </div>
-            <div className="card bg-white shadow-xl p-4 flex items-center">
+            <div
+              className="card bg-white shadow-xl p-4 flex items-center cursor-pointer hover:bg-gray-100"
+              onClick={() => navigate("/my-students?trackFilter=ON_TRACK")} // Redirect with filter
+            >
               <div className="flex-1">
                 <h2 className="text-lg font-bold">On Track Students</h2>
                 <p className="text-2xl">{onTrackCount}</p>
               </div>
             </div>
-            <div className="card bg-white shadow-xl p-4 flex items-center">
+            <div
+              className="card bg-white shadow-xl p-4 flex items-center cursor-pointer hover:bg-gray-100"
+              onClick={() => navigate("/my-students?trackFilter=NOT_ON_TRACK")} // Redirect with filter
+            >
               <div className="flex-1">
                 <h2 className="text-lg font-bold">Not On Track Students</h2>
                 <p className="text-2xl">{notOnTrackCount}</p>
