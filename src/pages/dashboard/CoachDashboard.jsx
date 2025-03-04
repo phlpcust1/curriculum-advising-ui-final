@@ -9,6 +9,7 @@ export function CoachDashboard() {
   const [students, setStudents] = useState([]);
   const [onTrackCount, setOnTrackCount] = useState(0);
   const [notOnTrackCount, setNotOnTrackCount] = useState(0);
+  const [activeTab, setActiveTab] = useState("dashboard"); // Default tab is 'dashboard'
   const navigate = useNavigate(); // Initialize navigation
 
   const fetchDashboardData = async () => {
@@ -34,15 +35,8 @@ export function CoachDashboard() {
       setStudents(processedStudents);
 
       // Count on-track and not-on-track students
-      const onTrack = processedStudents.filter(
-        (student) => student.isOnTrack
-      ).length;
-      const notOnTrack = processedStudents.filter(
-        (student) => !student.isOnTrack
-      ).length;
-
-      setOnTrackCount(onTrack);
-      setNotOnTrackCount(notOnTrack);
+      setOnTrackCount(processedStudents.filter((s) => s.isOnTrack).length);
+      setNotOnTrackCount(processedStudents.filter((s) => !s.isOnTrack).length);
     } catch (error) {
       console.error("Error fetching dashboard data:", error);
     }
@@ -70,7 +64,7 @@ export function CoachDashboard() {
             </div>
             <div
               className="card bg-white shadow-xl p-4 flex items-center cursor-pointer hover:bg-gray-100"
-              onClick={() => navigate("/my-students?trackFilter=ON_TRACK")} // Redirect with filter
+              onClick={() => navigate("/my-students?trackFilter=ON_TRACK")}
             >
               <div className="flex-1">
                 <h2 className="text-lg font-bold">On Track Students</h2>
@@ -79,7 +73,7 @@ export function CoachDashboard() {
             </div>
             <div
               className="card bg-white shadow-xl p-4 flex items-center cursor-pointer hover:bg-gray-100"
-              onClick={() => navigate("/my-students?trackFilter=NOT_ON_TRACK")} // Redirect with filter
+              onClick={() => navigate("/my-students?trackFilter=NOT_ON_TRACK")}
             >
               <div className="flex-1">
                 <h2 className="text-lg font-bold">Not On Track Students</h2>
@@ -114,9 +108,7 @@ export function CoachDashboard() {
                         <td>
                           <span
                             className={`badge ${
-                              student.isOnTrack
-                                ? "badge-success"
-                                : "badge-error"
+                              student.isOnTrack ? "badge-success" : "badge-error"
                             }`}
                           >
                             {student.isOnTrack ? "On Track" : "Not On Track"}
@@ -125,11 +117,7 @@ export function CoachDashboard() {
                         <td>
                           <button
                             className="btn btn-sm btn-outline"
-                            onClick={() =>
-                              window.location.assign(
-                                `/my-students/${student.id}`
-                              )
-                            }
+                            onClick={() => navigate(`/my-students/${student.id}`)}
                           >
                             View Subjects
                           </button>
@@ -142,7 +130,7 @@ export function CoachDashboard() {
               <div className="flex justify-end mt-4">
                 <button
                   className="btn btn-sm btn-outline"
-                  onClick={() => window.location.assign("/my-students")}
+                  onClick={() => navigate("/my-students")}
                 >
                   View All
                 </button>

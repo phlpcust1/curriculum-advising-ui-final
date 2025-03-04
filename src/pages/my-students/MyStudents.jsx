@@ -3,6 +3,8 @@ import axios from "axios";
 import { Navbar } from "../../components/ui/Navbar";
 import { Sidebar } from "../../components/ui/Sidebar";
 import { PORT } from "../../utils/constants";
+import { useLocation } from "react-router-dom";
+
 
 export function MyStudents() {
   const [students, setStudents] = useState([]);
@@ -11,6 +13,12 @@ export function MyStudents() {
   const [yearFilter, setYearFilter] = useState("ALL");
   const [programFilter, setProgramFilter] = useState("ALL");
   const [trackFilter, setTrackFilter] = useState("ALL");
+  const location = useLocation();
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const trackFilterParam = params.get("trackFilter") || "ALL";
+    setTrackFilter(trackFilterParam);
+}, [location.search]);
 
   const fetchPrograms = async () => {
     try {
